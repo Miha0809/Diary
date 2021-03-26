@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Diary.Models.Student>
+
+@{
+    ViewBag.Title = "Students";
+    Layout = "_Layout";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(user => user.FirstName)</th>
+            <th>@Html.DisplayNameFor(user => user.LastName)</th>
+            <th>@Html.DisplayNameFor(user => user.Age)</th>
+            <th>@Html.DisplayNameFor(user => user.Email)</th>
+            <th>@Html.DisplayNameFor(user => user.Phone)</th>
+            <th>@Html.DisplayNameFor(user => user.Group)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(itemModel => item.FirstName)</td>
+            <td>@Html.DisplayFor(itemModel => item.LastName)</td>
+            <td>@Html.DisplayFor(itemModel => item.Age)</td>
+            <td>@Html.DisplayFor(itemModel => item.Email)</td>
+            <td>@Html.DisplayFor(itemModel => item.Phone)</td>
+            <td>@Html.DisplayFor(itemModel => item.Group.Name)</td>
+        </tr>
+        }
+    </tbody>
+</table>

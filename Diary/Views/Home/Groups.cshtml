@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Diary.Models.Group>
+@{
+    ViewData["Title"] = "Groups";
+    Layout = "_Layout";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(group => group.Name)</th>
+            <th>@Html.DisplayNameFor(group => group.Teacher.FirstName) @Html.DisplayNameFor(group => group.Teacher.LastName)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(group => item.Name)</td>
+            <td>@Html.DisplayFor(group => item.Teacher.FirstName) @Html.DisplayFor(group => item.Teacher.LastName)</td>
+        </tr>
+        }
+    </tbody>
+</table>
