@@ -1,17 +1,13 @@
 ﻿using Diary.Models;
 using Diary.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 
 namespace Diary.Controllers
 {
     public class AccountController : Controller
     {
-        private DiaryDbContext _diaryDbContext;
+        private readonly DiaryDbContext _diaryDbContext;
 
         public AccountController(DiaryDbContext diaryDbContext)
         {
@@ -19,47 +15,52 @@ namespace Diary.Controllers
         }
 
         [HttpGet]
-        public IActionResult LogIn()
+        public IActionResult AccountTeacher()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult LogIn(LogInTeacher logIn)
+        [HttpGet]
+        public IActionResult AddStudent()
         {
-            var allTeacher = _diaryDbContext.Teachers.FirstOrDefault(x => x.Email == logIn.Email && x.Password == logIn.Password);
+            ViewBag.Group = _diaryDbContext.Groups.Select(group => group.Id);
+            return View();
+        }
 
-            if (allTeacher == null)
+        [HttpPost]
+        public IActionResult AddStudent(Student student)
+        {
+            if (student == null)
             {
-                return NotFound();
+                return NotFound("student is null");
             }
 
-            Authentication(logIn.Email);
-
-            return RedirectToAction("Account");
-        }
-
-        [HttpPost]
-        public IActionResult LogOut()
-        {
-            HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
-
-        private void Authentication(string userName)
-        {
-            var claims = new List<Claim>
+            var allStudentEmail = _diaryDbContext.Students.FirstOrDefault(user => user.Email == student.Email);
+            var allStudentPhone = _diaryDbContext.Students.FirstOrDefault(user => user.Phone == student.Phone);
+            
+            if (allStudentEmail == null && allStudentPhone == null)
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-            };
+                var addStudent = _diaryDbContext.Students.Add(new Student
+                {
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    Age = student.Age,
+                    Email = student.Email,
+                    Phone = student.Phone,
+                    Password = student.Password
+                });
+                _diaryDbContext.SaveChanges();
 
-            var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+                return RedirectToAction("Students", "Home");
+            }
+
+            return NotFound("Error Data");
         }
+
+        /**************************************** About Student ****************************************/
 
         [HttpGet]
-        public IActionResult Account()
+        public IActionResult AccountStudent()
         {
             return View();
         }
