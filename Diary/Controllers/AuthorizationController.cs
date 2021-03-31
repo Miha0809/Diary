@@ -27,7 +27,6 @@ namespace Diary.Controllers
         [HttpPost]
         public IActionResult LogInAsTeacher(LogIn logIn)
         {
-
             var allTeachers = _diaryDbContext.Teachers.FirstOrDefault(x => x.Email == logIn.Email && x.Password == logIn.Password);
 
             if (allTeachers == null)
@@ -37,8 +36,10 @@ namespace Diary.Controllers
 
             Authentication(logIn.Email);
 
-            return RedirectToAction("AccountTeacher", "Account");
-
+            return RedirectToAction("Teacher", "ProfileTeacher", new
+            {
+                area = "Teacher"
+            });
         }
 
         [HttpGet]
@@ -59,13 +60,15 @@ namespace Diary.Controllers
 
             Authentication(logIn.Email);
 
-            return RedirectToAction("AccountStudent", "Account");
+            return RedirectToAction("Student", "ProfileStudent", new
+            {
+                area = "Student"
+            });
         }
 
-        [HttpPost]
         public IActionResult LogOut()
         {
-            HttpContext.SignOutAsync();
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
 

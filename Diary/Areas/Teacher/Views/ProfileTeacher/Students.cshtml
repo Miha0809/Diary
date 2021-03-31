@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Diary.Models.Student>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_LayoutTeacher";
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>@Html.DisplayNameFor(user => user.FirstName)</th>
+        <th>@Html.DisplayNameFor(user => user.LastName)</th>
+        <th>@Html.DisplayNameFor(user => user.Age)</th>
+        <th>@Html.DisplayNameFor(user => user.Email)</th>
+        <th>@Html.DisplayNameFor(user => user.Phone)</th>
+        <th>@Html.DisplayNameFor(user => user.Group)</th>
+        <th>@Html.DisplayNameFor(user => user.Password)</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(itemModel => item.FirstName)</td>
+            <td>@Html.DisplayFor(itemModel => item.LastName)</td>
+            <td>@Html.DisplayFor(itemModel => item.Age)</td>
+            <td>@Html.DisplayFor(itemModel => item.Email)</td>
+            <td>@Html.DisplayFor(itemModel => item.Phone)</td>
+            <td>@Html.DisplayFor(itemModel => item.Group.Name)</td>
+            <td>@Html.DisplayFor(itemModel => item.Password)</td>
+            <td>
+                @* <a href="~/ProfileTeacher/EditStudent/@item.Id">Edit</a> | *@
+                @* <a href="~/ProfileTeacher/Details/@item.Id">Details</a> | *@
+                <a href="~/ProfileTeacher/RemoveStudent/@item.Id"
+                   onclick="return confirm('Delete?')">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

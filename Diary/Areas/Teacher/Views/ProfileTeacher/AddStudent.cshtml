@@ -1,0 +1,56 @@
+﻿@model Diary.Models.Student
+
+@{
+    ViewData["Title"] = "Account Teacher";
+    Layout = "_LayoutTeacher";
+}
+
+<div>
+    <main id="main">
+        <form asp-action="AddStudent" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label">@Html.DisplayNameFor(x => x.FirstName)</label>
+                <input type="text" asp-for="FirstName" name="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label">@Html.DisplayNameFor(x => x.LastName)</label>
+                <input type="text" asp-for="LastName" name="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label">@Html.DisplayNameFor(x => x.Age)</label>
+                <input type="number" asp-for="Age" name="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">@Html.DisplayNameFor(x => x.Email)</label>
+                <input type="email" asp-for="Email" name="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label">@Html.DisplayNameFor(x => x.Phone)</label>
+                <input type="text" asp-for="Phone" name="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">@Html.DisplayNameFor(x => x.Password)</label>
+                <input type="password" asp-for="Password" name="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Group" class="control-label">@Html.DisplayNameFor(x => x.Group)</label>
+                <input type="text" asp-for="Group" name="Group" class="form-control" />
+                @* <select asp-for="Group" asp-items="Html.GetEnumSelectList<AllGroups>()"></select>  *@
+                <span asp-validation-for="Group" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </main>
+
+    <footer id="footer">
+    </footer>
+</div>

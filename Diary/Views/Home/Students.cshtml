@@ -20,15 +20,15 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>@Html.DisplayFor(itemModel => item.FirstName)</td>
-            <td>@Html.DisplayFor(itemModel => item.LastName)</td>
-            <td>@Html.DisplayFor(itemModel => item.Age)</td>
-            <td>@Html.DisplayFor(itemModel => item.Email)</td>
-            <td>@Html.DisplayFor(itemModel => item.Phone)</td>
-            <td>@Html.DisplayFor(itemModel => item.Group.Name)</td>
-            <td>@Html.DisplayFor(itemModel => item.Password)</td>
-        </tr>
+            <tr>
+                <td>@Html.DisplayFor(itemModel => item.FirstName)</td>
+                <td>@Html.DisplayFor(itemModel => item.LastName)</td>
+                <td>@Html.DisplayFor(itemModel => item.Age)</td>
+                <td>@Html.DisplayFor(itemModel => item.Email)</td>
+                <td>@Html.DisplayFor(itemModel => item.Phone)</td>
+                <td>@Html.DisplayFor(itemModel => item.Group.Name)</td>
+                <td>@Html.DisplayFor(itemModel => item.Password)</td>
+            </tr>
         }
     </tbody>
 </table>

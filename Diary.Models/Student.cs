@@ -1,4 +1,6 @@
-﻿using Diary.Models.interfaces;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Diary.Models.interfaces;
 
 namespace Diary.Models
 {
@@ -14,5 +16,6 @@ namespace Diary.Models
         public string Password { get; set; }
 
         public virtual Group Group { get; set; }
+        public virtual ICollection<HomeWork> Homeworks { get; set; }
     }
 }

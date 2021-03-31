@@ -1,23 +1,29 @@
-﻿using Diary.Models;
-using Diary.Services;
 using Microsoft.AspNetCore.Mvc;
+using Diary.Services;
 using System.Linq;
+using Diary.Models;
 
 namespace Diary.Controllers
 {
-    public class AccountController : Controller
+    [Area("Teacher")]
+    public class ProfileTeacherController : Controller
     {
         private readonly DiaryDbContext _diaryDbContext;
 
-        public AccountController(DiaryDbContext diaryDbContext)
+        public ProfileTeacherController(DiaryDbContext diaryDbContext)
         {
             this._diaryDbContext = diaryDbContext;
         }
 
         [HttpGet]
-        public IActionResult AccountTeacher()
+        public IActionResult Teacher()
         {
             return View();
+        }
+
+        public IActionResult Students()
+        {
+            return View(_diaryDbContext.Students.ToList());
         }
 
         [HttpGet]
@@ -38,9 +44,11 @@ namespace Diary.Controllers
             var allStudentEmail = _diaryDbContext.Students.FirstOrDefault(user => user.Email == student.Email);
             var allStudentPhone = _diaryDbContext.Students.FirstOrDefault(user => user.Phone == student.Phone);
             
-            if (allStudentEmail == null && allStudentPhone == null)
+            if (allStudentEmail == null &&
+                allStudentPhone == null &&
+                student.Password.Length >= 6)
             {
-                var addStudent = _diaryDbContext.Students.Add(new Student
+                _diaryDbContext.Students.Add(new Student
                 {
                     FirstName = student.FirstName,
                     LastName = student.LastName,
@@ -48,6 +56,7 @@ namespace Diary.Controllers
                     Email = student.Email,
                     Phone = student.Phone,
                     Password = student.Password
+                    // Group = student.Group
                 });
                 _diaryDbContext.SaveChanges();
 
@@ -57,12 +66,20 @@ namespace Diary.Controllers
             return NotFound("Error Data");
         }
 
-        /**************************************** About Student ****************************************/
-
         [HttpGet]
-        public IActionResult AccountStudent()
+        public IActionResult RemoveStudent(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound("Id student == null");
+            }
+
+            var removeStudent = _diaryDbContext.Students.Find(id);
+
+            _diaryDbContext.Students.Remove(removeStudent);
+            _diaryDbContext.SaveChanges();
+
+            return RedirectToAction("Students", "ProfileTeacher");
         }
     }
 }

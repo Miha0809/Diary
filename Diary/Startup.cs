@@ -53,9 +53,19 @@ namespace Diary
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+          
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "Teacher",
+                    areaName: "Teacher",
+                    pattern: "Teacher/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                    name: "Student",
+                    areaName: "Student",
+                    pattern: "Student/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

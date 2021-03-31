@@ -8,7 +8,7 @@ namespace Diary.Controllers
 {
     public class HomeController : Controller
     {
-        private DiaryDbContext _diaryDbContext;
+        private readonly DiaryDbContext _diaryDbContext;
 
         public HomeController(DiaryDbContext diaryDbContext)
         {
