@@ -1,7 +1,10 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Diary.Services;
 using System.Linq;
+using System.Security.Cryptography;
 using Diary.Models;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Diary.Controllers
 {
@@ -43,10 +46,13 @@ namespace Diary.Controllers
 
             var allStudentEmail = _diaryDbContext.Students.FirstOrDefault(user => user.Email == student.Email);
             var allStudentPhone = _diaryDbContext.Students.FirstOrDefault(user => user.Phone == student.Phone);
-            
+
             if (allStudentEmail == null &&
                 allStudentPhone == null &&
-                student.Password.Length >= 6)
+                !string.IsNullOrWhiteSpace(student.FirstName) &&
+                !string.IsNullOrWhiteSpace(student.LastName) &&
+                !string.IsNullOrWhiteSpace(student.Age.ToString())
+                )
             {
                 _diaryDbContext.Students.Add(new Student
                 {
@@ -55,12 +61,12 @@ namespace Diary.Controllers
                     Age = student.Age,
                     Email = student.Email,
                     Phone = student.Phone,
-                    Password = student.Password
+                    Password = CreateRandom.Password
                     // Group = student.Group
                 });
                 _diaryDbContext.SaveChanges();
 
-                return RedirectToAction("Students", "Home");
+                return RedirectToAction("Students", "ProfileTeacher");
             }
 
             return NotFound("Error Data");
