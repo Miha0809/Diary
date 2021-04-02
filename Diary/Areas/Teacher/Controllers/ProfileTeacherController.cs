@@ -61,8 +61,8 @@ namespace Diary.Controllers
                     Age = student.Age,
                     Email = student.Email,
                     Phone = student.Phone,
-                    Password = CreateRandom.Password
-                    // Group = student.Group
+                    Password = CreateRandom.Password,
+                    Group = student.Group
                 });
                 _diaryDbContext.SaveChanges();
 

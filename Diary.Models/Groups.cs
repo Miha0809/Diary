@@ -2,7 +2,7 @@
 
 namespace Diary.Models
 {
-    public enum AllGroups
+    public enum Groups
     {
         [Display(Name = "IT-11")] IT11,
         [Display(Name = "IT-12")] IT12,
