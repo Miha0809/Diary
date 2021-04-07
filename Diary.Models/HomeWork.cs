@@ -1,6 +1,6 @@
 ﻿namespace Diary.Models
 {
-    public class HomeWork
+    public class Homework
     {
         public int Id { get; set; }
 

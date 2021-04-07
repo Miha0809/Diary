@@ -1,3 +1,4 @@
+using System;
 using Diary.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -26,9 +27,12 @@ namespace Diary
                 o.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Diary")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(
-                o =>
+                options =>
                 {
-                    o.LoginPath = new PathString("/Account/Login");
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.Cookie.IsEssential = true;
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
                 }
             );
             services.AddControllersWithViews();

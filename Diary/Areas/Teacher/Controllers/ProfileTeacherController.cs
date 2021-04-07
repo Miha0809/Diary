@@ -1,13 +1,12 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Diary.Services;
 using System.Linq;
-using System.Security.Cryptography;
 using Diary.Models;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Diary.Controllers
 {
+    [Authorize]
     [Area("Teacher")]
     public class ProfileTeacherController : Controller
     {
@@ -18,7 +17,6 @@ namespace Diary.Controllers
             this._diaryDbContext = diaryDbContext;
         }
 
-        [HttpGet]
         public IActionResult Teacher()
         {
             return View();
@@ -27,6 +25,11 @@ namespace Diary.Controllers
         public IActionResult Students()
         {
             return View(_diaryDbContext.Students.ToList());
+        }
+
+        public IActionResult Homeworks()
+        {
+            return View(_diaryDbContext.Homeworks.ToList());
         }
 
         [HttpGet]
@@ -86,6 +89,19 @@ namespace Diary.Controllers
             _diaryDbContext.SaveChanges();
 
             return RedirectToAction("Students", "ProfileTeacher");
+        }
+
+        [HttpGet]
+        public IActionResult AddHomework()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddHomework(Homework homework)
+        {
+
+            return View();
         }
     }
 }

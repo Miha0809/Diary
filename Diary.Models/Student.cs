@@ -16,6 +16,6 @@ namespace Diary.Models
         public string Password { get; set; }
 
         public virtual Group Group { get; set; }
-        public virtual ICollection<HomeWork> Homeworks { get; set; }
+        public virtual ICollection<Homework> Homeworks { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 using Diary.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diary.Controllers
 {
+    [Authorize]
     [Area("Student")]
     public class ProfileStudentController : Controller
     {
@@ -22,7 +24,7 @@ namespace Diary.Controllers
         }
 
         [HttpGet]
-        public IActionResult HomeWorks()
+        public IActionResult Homeworks()
         {
             return View();
         }
