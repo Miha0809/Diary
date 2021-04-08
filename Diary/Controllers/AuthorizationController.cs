@@ -60,7 +60,7 @@ namespace Diary.Controllers
 
             Authentication(logIn.Email);
 
-            return RedirectToAction("Student", "ProfileStudent", new
+            return RedirectToAction("Index", "ProfileStudent", new
             {
                 area = "Student"
             });
