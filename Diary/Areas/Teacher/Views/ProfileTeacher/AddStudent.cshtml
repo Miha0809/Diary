@@ -1,5 +1,4 @@
-﻿@model Diary.Models.Student
-
+﻿@model (Student student, List<Group> groups)
 @{
     ViewData["Title"] = "Account Teacher";
     Layout = "_LayoutTeacher";
@@ -10,39 +9,39 @@
         <form asp-action="AddStudent" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label">@Html.DisplayNameFor(x => x.FirstName)</label>
-                <input type="text" asp-for="FirstName" name="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="student.FirstName" class="control-label">@Html.DisplayNameFor(x => x.student.FirstName)</label>
+                <input type="text" asp-for="student.FirstName" name="FirstName" class="form-control" />
+                <span asp-validation-for="student.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label">@Html.DisplayNameFor(x => x.LastName)</label>
-                <input type="text" asp-for="LastName" name="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="student.LastName" class="control-label">@Html.DisplayNameFor(x => x.student.LastName)</label>
+                <input type="text" asp-for="student.LastName" name="LastName" class="form-control" />
+                <span asp-validation-for="student.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Age" class="control-label">@Html.DisplayNameFor(x => x.Age)</label>
-                <input type="number" asp-for="Age" name="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
+                <label asp-for="student.Age" class="control-label">@Html.DisplayNameFor(x => x.student.Age)</label>
+                <input type="number" asp-for="student.Age" name="Age" class="form-control" />
+                <span asp-validation-for="student.Age" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label">@Html.DisplayNameFor(x => x.Email)</label>
-                <input type="email" asp-for="Email" name="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="student.Email" class="control-label">@Html.DisplayNameFor(x => x.student.Email)</label>
+                <input type="email" asp-for="student.Email" name="Email" class="form-control" />
+                <span asp-validation-for="student.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone" class="control-label">@Html.DisplayNameFor(x => x.Phone)</label>
-                <input type="text" asp-for="Phone" name="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <label asp-for="student.Phone" class="control-label">@Html.DisplayNameFor(x => x.student.Phone)</label>
+                <input type="text" asp-for="student.Phone" name="Phone" class="form-control" />
+                <span asp-validation-for="student.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 @*<label asp-for="Group" class="control-label">@Html.DisplayNameFor(x => x.Group)</label>
                 <input type="text" asp-for="Group" name="Group" class="form-control" />
                 $1$ <select asp-for="Group" asp-items="Html.GetEnumSelectList<AllGroups>()"></select>  #1#
                 <span asp-validation-for="Group" class="text-danger"></span>*@
-                <select asp-for="Group" name="Group">
-                    @foreach (Groups item in Enum.GetValues(typeof(Groups)))
-                    {   
-                        <option value="@item">@item</option>
+                <select>
+                    @foreach (var item in Model.groups)
+                    {
+                        <option value="@item.Name">@item.Name</option>
                     }
                 </select>
             </div>

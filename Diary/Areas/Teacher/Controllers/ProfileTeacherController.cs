@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Diary.Services;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Diary.Controllers
             this._diaryDbContext = diaryDbContext;
         }
 
-        public IActionResult Teacher()
+        public IActionResult Index()
         {
             return View();
         }
@@ -35,8 +36,9 @@ namespace Diary.Controllers
         [HttpGet]
         public IActionResult AddStudent()
         {
-            ViewBag.Group = _diaryDbContext.Groups.Select(group => group.Id);
-            return View();
+            var student = new Student();
+            (Student student, List<Group> group) all = (student, _diaryDbContext.Groups.ToList());
+            return View(all);
         }
 
         [HttpPost]
@@ -64,7 +66,7 @@ namespace Diary.Controllers
                     Age = student.Age,
                     Email = student.Email,
                     Phone = student.Phone,
-                    Password = CreateRandom.Password,
+                    Password = CreateRandom.Password(),
                     Group = student.Group
                 });
                 _diaryDbContext.SaveChanges();

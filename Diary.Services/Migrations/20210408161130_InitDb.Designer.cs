@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diary.Services.Migrations
 {
     [DbContext(typeof(DiaryDbContext))]
-    [Migration("20210331090337_Chenge")]
-    partial class Chenge
+    [Migration("20210408161130_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Diary.Models.Group", b =>
@@ -39,6 +39,43 @@ namespace Diary.Services.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("Diary.Models.Homework", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Lesson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LongDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StopDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Homeworks");
                 });
 
             modelBuilder.Entity("Diary.Models.Student", b =>
@@ -108,11 +145,22 @@ namespace Diary.Services.Migrations
 
             modelBuilder.Entity("Diary.Models.Group", b =>
                 {
-                    b.HasOne("Diary.Models.Teacher", "Teacher")
-                        .WithMany()
+                    b.HasOne("Diary.Models.Teacher", null)
+                        .WithMany("Groups")
                         .HasForeignKey("TeacherId");
+                });
 
-                    b.Navigation("Teacher");
+            modelBuilder.Entity("Diary.Models.Homework", b =>
+                {
+                    b.HasOne("Diary.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Diary.Models.Student", null)
+                        .WithMany("Homeworks")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Diary.Models.Student", b =>
@@ -122,6 +170,16 @@ namespace Diary.Services.Migrations
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Diary.Models.Student", b =>
+                {
+                    b.Navigation("Homeworks");
+                });
+
+            modelBuilder.Entity("Diary.Models.Teacher", b =>
+                {
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

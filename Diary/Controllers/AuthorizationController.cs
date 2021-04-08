@@ -36,7 +36,7 @@ namespace Diary.Controllers
 
             Authentication(logIn.Email);
 
-            return RedirectToAction("Teacher", "ProfileTeacher", new
+            return RedirectToAction("Index", "ProfileTeacher", new
             {
                 area = "Teacher"
             });

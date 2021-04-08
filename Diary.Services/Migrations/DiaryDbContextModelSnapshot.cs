@@ -49,14 +49,20 @@ namespace Diary.Services.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Lesson")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("LongDescription")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StopDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("StudentId")
                         .HasColumnType("int");
@@ -137,11 +143,9 @@ namespace Diary.Services.Migrations
 
             modelBuilder.Entity("Diary.Models.Group", b =>
                 {
-                    b.HasOne("Diary.Models.Teacher", "Teacher")
-                        .WithMany()
+                    b.HasOne("Diary.Models.Teacher", null)
+                        .WithMany("Groups")
                         .HasForeignKey("TeacherId");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Diary.Models.Homework", b =>
@@ -169,6 +173,11 @@ namespace Diary.Services.Migrations
             modelBuilder.Entity("Diary.Models.Student", b =>
                 {
                     b.Navigation("Homeworks");
+                });
+
+            modelBuilder.Entity("Diary.Models.Teacher", b =>
+                {
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

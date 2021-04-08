@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Homeworks";
-    Layout = "_LayoutTeacher";
+    Layout = "~/Areas/Teacher/Views/Shared/_LayoutTeacher.cshtml";
 }
 
 <h1>Homeworks</h1>
@@ -14,13 +14,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.ShortDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LongDescription)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Lesson)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
+                @Html.DisplayNameFor(model => model.StartDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StopDateTime)
             </th>
             <th></th>
         </tr>
@@ -29,19 +35,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LongDescription)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Lesson)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
+                @Html.DisplayFor(modelItem => item.StartDateTime)
             </td>
-            @*<td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StopDateTime)
+            </td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
         </tr>
 }
     </tbody>
