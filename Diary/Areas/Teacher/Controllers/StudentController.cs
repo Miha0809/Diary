@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Diary.Areas.Teacher.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Area("Teacher")]
     public class StudentController : Controller
     {
@@ -30,9 +30,9 @@ namespace Diary.Areas.Teacher.Controllers
             (Models.Student student, List<Group> group) all = (student, _diaryDbContext.Groups.ToList());
             return View(all);
         }
-
+        
         [HttpPost]
-        public IActionResult AddStudent(Models.Student student)
+        public IActionResult AddStudent(string returnUrl, Models.Student student)
         {
             if (student == null)
             {
@@ -56,8 +56,7 @@ namespace Diary.Areas.Teacher.Controllers
                     Age = student.Age,
                     Email = student.Email,
                     Phone = student.Phone,
-                    Password = CreateRandom.Password(),
-                    Group = student.Group
+                    Password = CreateRandom.Password()
                 });
                 _diaryDbContext.SaveChanges();
 

@@ -29,7 +29,7 @@ namespace Diary
             .AddCookie(
                 options =>
                 {
-                    options.LoginPath = new PathString("/Account/Login");
+                    options.LoginPath = "/Authorization/LogInAsTeacher";
                     options.Cookie.IsEssential = true;
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
