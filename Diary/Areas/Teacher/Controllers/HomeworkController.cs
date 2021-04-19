@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Diary.Areas.Teacher.Controllers
 {
-    [Authorize]
+    /*[Authorize]*/
     [Area("Teacher")]
     public class HomeworkController : Controller
     {
@@ -23,14 +23,29 @@ namespace Diary.Areas.Teacher.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddHomework()
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddHomework(Homework homework)
+        public IActionResult Add(Homework homework)
         {
+            if (homework == null)
+            {
+                return NotFound("homrwork == null");
+            }
+
+            var addHomework = new Homework()
+            {
+                ShortDescription = homework.ShortDescription,
+                LongDescription = homework.LongDescription,
+                Lesson = homework.Lesson,
+                StartDateTime = homework.StartDateTime,
+                StopDateTime = homework.StopDateTime,
+                Group = homework.Group
+            };
+            _diaryDbContext.SaveChanges();
 
             return View();
         }

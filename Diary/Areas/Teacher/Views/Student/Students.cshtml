@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Diary.Models.Student>
-
 @{
     ViewData["Title"] = "Students";
     Layout = "_LayoutTeacher";
@@ -29,10 +28,10 @@
             <td>@Html.DisplayFor(itemModel => item.Group.Name)</td>
             <td>@Html.DisplayFor(itemModel => item.Password)</td>
             <td>
-                @* <a href="~/ProfileTeacher/EditStudent/@item.Id">Edit</a> | *@
-                @* <a href="~/ProfileTeacher/Details/@item.Id">Details</a> | *@
-                <a href="~/ProfileTeacher/RemoveStudent/@item.Id"
-                   onclick="return confirm('Delete?')">Delete</a>
+                 @*<a href="~/Teacher/Student/Edit/@item.Id">Edit</a> |*@ 
+                 <a href="~/Teacher/Student/Details/@item.Id">Details</a> | 
+                 <a href="~/Teacher/Student/Remove/@item.Id"
+                    onclick="return confirm('Delete?')">Delete</a>
             </td>
         </tr>
     }
