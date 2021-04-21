@@ -4,6 +4,12 @@
     Layout = "_LayoutTeacher";
 }
 
+<h1>Students</h1>
+
+<p>
+    <a asp-area="Teacher" asp-controller="Student" asp-action="Add">Add Student</a>
+</p>
+
 <table class="table">
     <thead>
     <tr>
@@ -28,7 +34,7 @@
             <td>@Html.DisplayFor(itemModel => item.Group.Name)</td>
             <td>@Html.DisplayFor(itemModel => item.Password)</td>
             <td>
-                 @*<a href="~/Teacher/Student/Edit/@item.Id">Edit</a> |*@ 
+                 <a href="~/Teacher/Student/Edit/@item.Id">Edit</a> | 
                  <a href="~/Teacher/Student/Details/@item.Id">Details</a> | 
                  <a href="~/Teacher/Student/Remove/@item.Id"
                     onclick="return confirm('Delete?')">Delete</a>

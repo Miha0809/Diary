@@ -3,10 +3,11 @@ using System.Linq;
 using Diary.Models;
 using Diary.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Diary.Areas.Teacher.Controllers
 {
-    /*[Authorize]*/
+    [Authorize]
     [Area("Teacher")]
     public class HomeworkController : Controller
     {
@@ -25,6 +26,8 @@ namespace Diary.Areas.Teacher.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
+            ViewBag.Lessons = new SelectList(_diaryDbContext.Lessons.ToList(), "Id", "Name");
             return View();
         }
 
@@ -36,16 +39,27 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("homrwork == null");
             }
 
-            var addHomework = new Homework()
+            if (!string.IsNullOrWhiteSpace(homework.ShortDescription) &&
+                !string.IsNullOrWhiteSpace(homework.LongDescription) &&
+                homework.Group != null &&
+                homework.Lesson != null)
             {
-                ShortDescription = homework.ShortDescription,
-                LongDescription = homework.LongDescription,
-                Lesson = homework.Lesson,
-                StartDateTime = homework.StartDateTime,
-                StopDateTime = homework.StopDateTime,
-                Group = homework.Group
-            };
-            _diaryDbContext.SaveChanges();
+                var group = _diaryDbContext.Groups.FirstOrDefault(x => x.Id == homework.Group.Id);
+                var lesson = _diaryDbContext.Lessons.FirstOrDefault(x => x.Id == homework.Lesson.Id);
+
+                _diaryDbContext.Homeworks.Add(new Homework()
+                {
+                    ShortDescription = homework.ShortDescription,
+                    LongDescription = homework.LongDescription,
+                    StartDateTime = homework.StartDateTime,
+                    StopDateTime = homework.StopDateTime,
+                    Group = group,
+                    Lesson = lesson
+                });
+                _diaryDbContext.SaveChanges();
+
+                return RedirectToAction("Homeworks", "Homework");
+            }
 
             return View();
         }

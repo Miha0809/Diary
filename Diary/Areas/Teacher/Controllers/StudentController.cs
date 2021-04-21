@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using Diary.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Diary.Areas.Teacher.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Area("Teacher")]
     public class StudentController : Controller
     {
@@ -80,8 +81,7 @@ namespace Diary.Areas.Teacher.Controllers
             return RedirectToAction("Students", "Student");
         }
 
-        /*
-        [HttpGet]
+        /*[HttpGet]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -107,7 +107,6 @@ namespace Diary.Areas.Teacher.Controllers
 
             return RedirectToAction("Students", "Student");
         }*/
-
 
         public IActionResult Details(int? id)
         {

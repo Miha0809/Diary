@@ -1,16 +1,16 @@
 ﻿@model Diary.Models.Homework
 @{
-    ViewData["Title"] = "AddHomework";
+    ViewData["Title"] = "Add";
     Layout = "_LayoutTeacher";
 }
 
-<h1>AddHomework</h1>
+<h1>Add</h1>
 
 <h4>Homework</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Add" method="post">
+        <form asp-action="Add">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ShortDescription" class="control-label"></label>
@@ -23,11 +23,6 @@
                 <span asp-validation-for="LongDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lesson" class="control-label"></label>
-                <input asp-for="Lesson" class="form-control" />
-                <span asp-validation-for="Lesson" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="StartDateTime" class="control-label"></label>
                 <input asp-for="StartDateTime" class="form-control" />
                 <span asp-validation-for="StartDateTime" class="text-danger"></span>
@@ -38,6 +33,12 @@
                 <span asp-validation-for="StopDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <select asp-for="Group.Id" asp-items="ViewBag.Groups"></select>
+            </div>
+            <div class="form-group">
+                <select asp-for="Lesson.Id" asp-items="ViewBag.Lessons"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -45,9 +46,6 @@
 </div>
 
 <div>
-    <a asp-area="Teacher" asp-controller="Student" asp-action="Students">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

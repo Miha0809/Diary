@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Diary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +11,6 @@ namespace Diary.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        [HttpPost]
-        public IActionResult Test(Group group)
-        {
-            return View(group.ToString());
         }
     }
 }

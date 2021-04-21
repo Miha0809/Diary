@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Diary.Models.Homework>
-
 @{
     ViewData["Title"] = "Homeworks";
-    Layout = "~/Areas/Teacher/Views/Shared/_LayoutTeacher.cshtml";
+    Layout = "_LayoutTeacher";
 }
 
 <h1>Homeworks</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-area="Teacher" asp-controller="Homework" asp-action="Add">Add Homework</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -20,41 +20,46 @@
                 @Html.DisplayNameFor(model => model.LongDescription)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Lesson)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.StartDateTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StopDateTime)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lesson)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShortDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LongDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lesson)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StopDateTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StopDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lesson.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

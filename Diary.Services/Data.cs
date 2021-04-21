@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using Diary.Models;
 
 namespace Diary.Services
@@ -19,17 +17,14 @@ namespace Diary.Services
             {
 
                 diaryDbContext.Groups.AddRange(
-                    new Group() { Name = "IT-11" },
-                    new Group() { Name = "IT-12" },
-                    new Group() { Name = "IC-11" },
-                    new Group() { Name = "IC-12" }
-                    );
+                    new Group() {Name = "IT-11"},
+                    new Group() {Name = "IT-12"},
+                    new Group() {Name = "IC-11"},
+                    new Group() {Name = "IC-12"}
+                );
 
                 diaryDbContext.SaveChanges();
             }
-
-            var group = new Group();
-            group = diaryDbContext.Groups.Select(p => p).FirstOrDefault(p => p.Id == 1);
 
             if (!diaryDbContext.Teachers.Any())
             {
@@ -84,6 +79,50 @@ namespace Diary.Services
                     }
                 );
 
+                diaryDbContext.SaveChanges();
+            }
+
+            if (!diaryDbContext.Lessons.Any())
+            {
+                diaryDbContext.Lessons.AddRange(
+                    new Lesson()
+                    {
+                        Name = "Math"
+                    },
+                    new Lesson()
+                    {
+                        Name = "History"
+                    },
+                    new Lesson()
+                    {
+                        Name = "Geography"
+                    },
+                    new Lesson()
+                    {
+                        Name = "Physics"
+                    },
+                    new Lesson()
+                    {
+                        Name = "Protection of Ukraine"
+                    }
+                );
+
+                diaryDbContext.SaveChanges();
+            }
+
+            if (!diaryDbContext.Homeworks.Any())
+            {
+                diaryDbContext.Homeworks.AddRange(
+                    new Homework()
+                    {
+                        ShortDescription = "Логарифми",
+                        LongDescription = "Прочитати 1пар. Впр.: 1.10, 1.12, 1.13",
+                        StartDateTime = DateTime.Now,
+                        StopDateTime = DateTime.Now.AddDays(1),
+                        Group = diaryDbContext.Groups.FirstOrDefault(p => p.Id == 1),
+                        Lesson = diaryDbContext.Lessons.FirstOrDefault(l => l.Id == 1)
+                    }
+                );
                 diaryDbContext.SaveChanges();
             }
         }

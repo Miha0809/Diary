@@ -13,5 +13,6 @@ namespace Diary.Services
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Homework> Homeworks { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
     }
 }
