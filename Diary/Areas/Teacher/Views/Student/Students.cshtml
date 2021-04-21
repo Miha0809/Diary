@@ -34,9 +34,9 @@
             <td>@Html.DisplayFor(itemModel => item.Group.Name)</td>
             <td>@Html.DisplayFor(itemModel => item.Password)</td>
             <td>
-                 <a href="~/Teacher/Student/Edit/@item.Id">Edit</a> | 
-                 <a href="~/Teacher/Student/Details/@item.Id">Details</a> | 
-                 <a href="~/Teacher/Student/Remove/@item.Id"
+                 <a asp-area="Teacher" asp-controller="Student" asp-action="Edit" asp-route-id="@item.Id">Edit</a> | 
+                 <a asp-area="Teacher" asp-controller="Student" asp-action="Details" asp-route-id="@item.Id">Details</a> | 
+                 <a asp-area="Teacher" asp-controller="Student" asp-action="Remove" asp-route-id="@item.Id"
                     onclick="return confirm('Delete?')">Delete</a>
             </td>
         </tr>

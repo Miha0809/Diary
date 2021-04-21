@@ -81,7 +81,7 @@ namespace Diary.Areas.Teacher.Controllers
             return RedirectToAction("Students", "Student");
         }
 
-        /*[HttpGet]
+        [HttpGet]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,7 +93,7 @@ namespace Diary.Areas.Teacher.Controllers
 
             return View(_diaryDbContext.Students.FirstOrDefault(x => x.Id == id));
         }
-
+        /*
         [HttpPost]
         public IActionResult Edit(Models.Student student)
         {
