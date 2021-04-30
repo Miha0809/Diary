@@ -13,12 +13,15 @@ namespace Diary.Areas.Teacher.Controllers
     {
         private readonly DiaryDbContext _diaryDbContext;
 
+        private Group _group;
+        private Lesson _lesson;
+
         public HomeworkController(DiaryDbContext diaryDbContext)
         {
             this._diaryDbContext = diaryDbContext;
         }
 
-        public IActionResult Homeworks()
+        public  IActionResult Homeworks()
         {
             return View(_diaryDbContext.Homeworks.ToList());
         }
@@ -28,6 +31,7 @@ namespace Diary.Areas.Teacher.Controllers
         {
             ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
             ViewBag.Lessons = new SelectList(_diaryDbContext.Lessons.ToList(), "Id", "Name");
+
             return View();
         }
 
@@ -36,7 +40,7 @@ namespace Diary.Areas.Teacher.Controllers
         {
             if (homework == null)
             {
-                return NotFound("homrwork == null");
+                return NotFound("homework == null");
             }
 
             if (!string.IsNullOrWhiteSpace(homework.ShortDescription) &&
@@ -62,6 +66,56 @@ namespace Diary.Areas.Teacher.Controllers
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound("id == null");
+            }
+
+            // TODO: урок, до якого відноситься ця ДЗ
+            // TODO: група, до якого відноситься ця ДЗ
+
+            return View(_diaryDbContext.Homeworks.Find(id));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Homework homework)
+        {
+            if (homework == null)
+            {
+                return NotFound("homework == null");
+            }
+
+            // TODO: зберегти групу, до якого відноситься ця ДЗ
+            // TODO: зберегти урок, до якого відноситься ця ДЗ
+
+            var h = _diaryDbContext.Homeworks.Select(h => h).First(h => h.Id == homework.Id);
+            
+            homework.Group = h.Group;
+            homework.Lesson = h.Lesson;
+
+            _diaryDbContext.Homeworks.Update(homework);
+            _diaryDbContext.SaveChanges();
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound("id == null");
+            }
+
+            _diaryDbContext.Homeworks.Remove(_diaryDbContext.Homeworks.Find(id));
+            _diaryDbContext.SaveChanges();
+
+            return RedirectToAction("Homeworks", "Homework");
         }
     }
 }

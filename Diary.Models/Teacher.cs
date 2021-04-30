@@ -15,5 +15,6 @@ namespace Diary.Models
         public string Password { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
+        // public virtual ICollection<Lesson> Lessons { get; set; }
     }
 }
