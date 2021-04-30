@@ -45,6 +45,13 @@ namespace Diary.Areas.Student.Controllers
         [HttpPost]
         public IActionResult HomeworkDetails(Homework homework)
         {
+
+            var h = _diaryDbContext.Homeworks.Select(h => h).First(h => h.Id == homework.Id);
+
+            // TODO: Зберегти групу та урок цього ДЗ
+            homework.Group = h.Group;
+            homework.Lesson = h.Lesson;
+
             _diaryDbContext.Homeworks.Update(homework);
             _diaryDbContext.SaveChanges();
 
