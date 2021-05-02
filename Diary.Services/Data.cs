@@ -121,9 +121,35 @@ namespace Diary.Services
                         StartDateTime = DateTime.Now,
                         StopDateTime = DateTime.Now.AddDays(1),
                         Group = diaryDbContext.Groups.FirstOrDefault(p => p.Id == 1),
-                        Lesson = diaryDbContext.Lessons.FirstOrDefault(l => l.Id == 1)
+                        Lesson = diaryDbContext.Lessons.FirstOrDefault(l => l.Id == 1),
+
                     }
                 );
+
+                diaryDbContext.SaveChanges();
+            }
+
+            var homework = diaryDbContext.Homeworks.First(h => h.Id == 1);
+            var student = diaryDbContext.Students.First(s => s.Id == 3);
+
+            if (!diaryDbContext.ReadyHomeworks.Any())
+            {
+                diaryDbContext.ReadyHomeworks.AddRange(
+                   new ReadyHomework()
+                    {
+                        ShortDescription = homework.ShortDescription,
+                        LongDescription = homework.LongDescription,
+                        TextToHomework = homework.TextToHomework,
+                        PathHomework = homework.PathHomework,
+                        StartDateTime = homework.StartDateTime,
+                        StopDateTime = homework.StopDateTime,
+                        Group = homework.Group,
+                        Lesson = homework.Lesson,
+                        Homework = homework,
+                        Student = student
+                    }
+                );
+
                 diaryDbContext.SaveChanges();
             }
         }

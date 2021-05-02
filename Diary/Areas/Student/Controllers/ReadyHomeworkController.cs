@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 using Diary.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diary.Areas.Student.Controllers
 {
+    [Authorize]
+    [Area("Student")]
     public class ReadyHomeworkController : Controller
     {
         private readonly DiaryDbContext _diaryDbContext;
@@ -16,17 +19,6 @@ namespace Diary.Areas.Student.Controllers
         public IActionResult ReadyHomeworks()
         {
             return View(_diaryDbContext.ReadyHomeworks.ToList());
-        }
-
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound("id == null");
-            }
-
-            _diaryDbContext.ReadyHomeworks.Remove(_diaryDbContext.ReadyHomeworks.Find(id));
-            return RedirectToAction("ReadyHomeworks");
         }
     }
 }

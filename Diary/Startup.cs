@@ -31,7 +31,7 @@ namespace Diary
                     options.LoginPath = "/Authorization/LogInAsTeacher";
                     options.Cookie.IsEssential = true;
                     options.SlidingExpiration = true;
-                    options.ExpireTimeSpan = TimeSpan.FromSeconds(1000);
+                    options.ExpireTimeSpan = TimeSpan.FromHours(DateTime.Now.Hour);
                 }
             );
             services.AddControllersWithViews();

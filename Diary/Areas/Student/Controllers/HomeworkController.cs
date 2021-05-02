@@ -80,12 +80,10 @@ namespace Diary.Areas.Student.Controllers
             readyHomework.PathHomework = path;
 
             /*var h = _diaryDbContext.Homeworks.Select(h => h).First(h => h.Id == homework.Id);
-
-            // TODO: Зберегти групу та урок цього ДЗ
             homework.Group = h.Group;
             homework.Lesson = h.Lesson;*/
 
-            _diaryDbContext.Homeworks.Update(homework);
+            _diaryDbContext.ReadyHomeworks.Add(readyHomework);
             _diaryDbContext.SaveChanges();
 
             return RedirectToAction("Homeworks", "Homework");

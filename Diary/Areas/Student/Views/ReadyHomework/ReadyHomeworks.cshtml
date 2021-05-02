@@ -6,10 +6,6 @@
 
 <h1>ReadyHomeworks</h1>
 
-<p>
-    <a asp-area="Student" asp-controller="Homework" asp-action="Homeworks">Homeworks</a>
-</p>
-
 <table class="table">
     <thead>
         <tr>
@@ -23,37 +19,63 @@
                 @Html.DisplayNameFor(model => model.TextToHomework)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.PathHomework)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.StartDateTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StopDateTime)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lesson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Homework)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShortDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LongDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TextToHomework)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StopDateTime)
-            </td>
-            <td>
-                <a asp-area="Student" asp-controller="ReadyHomework" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TextToHomework)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PathHomework)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StopDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Group.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Lesson.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Homework.ShortDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Student.Email)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

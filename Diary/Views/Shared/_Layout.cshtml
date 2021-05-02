@@ -30,27 +30,14 @@
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <ul class="navbar-nav flex-grow-end">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authorization" asp-action="LogOut">log out</a>
-                            </li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <ul class="navbar-nav flex-grow-end">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authorization" asp-action="LogInAsTeacher">log in as Teacher</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav flex-grow-end">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authorization" asp-action="LogInAsStudent">log in as Student</a>
-                            </li>
-                        </ul>
-                    }
+                    <ul class="navbar-nav flex-grow-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authorization" asp-action="LogInAsTeacher">log in as Teacher</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authorization" asp-action="LogInAsStudent">log in as Student</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
