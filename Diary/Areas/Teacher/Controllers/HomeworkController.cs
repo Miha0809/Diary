@@ -79,6 +79,9 @@ namespace Diary.Areas.Teacher.Controllers
             // TODO: урок, до якого відноситься ця ДЗ
             // TODO: група, до якого відноситься ця ДЗ
 
+            ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
+            ViewBag.Lessons = new SelectList(_diaryDbContext.Lessons.ToList(), "Id", "Name");
+
             return View(_diaryDbContext.Homeworks.Find(id));
         }
 
@@ -93,10 +96,10 @@ namespace Diary.Areas.Teacher.Controllers
             // TODO: зберегти групу, до якого відноситься ця ДЗ
             // TODO: зберегти урок, до якого відноситься ця ДЗ
 
-            var h = _diaryDbContext.Homeworks.Select(h => h).First(h => h.Id == homework.Id);
+            /*var h = _diaryDbContext.Homeworks.Select(h => h).First(h => h.Id == homework.Id);
             
             homework.Group = h.Group;
-            homework.Lesson = h.Lesson;
+            homework.Lesson = h.Lesson;*/
 
             _diaryDbContext.Homeworks.Update(homework);
             _diaryDbContext.SaveChanges();

@@ -1,9 +1,12 @@
-﻿namespace Diary.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.VisualBasic.CompilerServices;
+
+namespace Diary.Models
 {
     public class Lesson
     {
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
         
-        public string Name { get; set; }
+        [DataType(DataType.Text)] public string Name { get; set; }
     }
 }

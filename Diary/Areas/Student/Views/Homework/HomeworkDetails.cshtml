@@ -39,13 +39,14 @@
 
 <hr />
 
-<form action="HomeworkDetails" method="post">
+<form action="HomeworkDetails" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <textarea name="text" style="width: 70%;"></textarea>
+        <textarea name="TextToHomework" style="width: 70%;"></textarea>
     </div>
     <hr />
     <div class="form-group">
-        <input type="file" name="fileHomework" />
+        <input type="file" name="PathHomework" />
+        <p class="d-inline-flex">@Url.Content(Model.PathHomework)</p>
     </div>
     <div class="form-group">
         <input type="submit" value="Send" />

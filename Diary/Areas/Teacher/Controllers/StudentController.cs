@@ -91,10 +91,10 @@ namespace Diary.Areas.Teacher.Controllers
 
             ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
 
-            return View(_diaryDbContext.Students.FirstOrDefault(x => x.Id == id));
+            return View(_diaryDbContext.Students.Find(id));
         }
-        /*
-        [HttpPost]
+        
+        /*[HttpPost]
         public IActionResult Edit(Models.Student student)
         {
             if (student == null)

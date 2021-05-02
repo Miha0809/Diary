@@ -8,55 +8,6 @@
 
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LongDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StopDateTime)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        @if (!item.IsReady)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ShortDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LongDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StopDateTime)
-                </td>
-                <td>
-                    <a asp-area="Student" asp-controller="Homework" asp-action="HomeworkDetails" asp-route-id="@item.Id">Details</a>
-                </td>
-            </tr>
-        }
-    }
-    </tbody>
-</table>
-
-<hr />
-
-<h2>All Ready homeworks</h2>
-
-<table class="table">
-    <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ShortDescription)
@@ -76,9 +27,9 @@
     <tbody>
         @foreach (var item in Model)
         {
-            if (item.IsReady)
+            if (item.StopDateTime < DateTime.Now)
             {
-                <tr>
+                <tr class="alert-danger">
                     <td>
                         @Html.DisplayFor(modelItem => item.ShortDescription)
                     </td>
@@ -91,11 +42,53 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.StopDateTime)
                     </td>
+                    <td>
+                        <a asp-area="Student" asp-controller="Homework" asp-action="HomeworkDetails" asp-route-id="@item.Id">Details</a>
+                    </td>
                 </tr>
-                <td>
-                    <a asp-area="Student" asp-controller="Homework" asp-action="HomeworkDetails" asp-route-id="@item.Id">Details</a>
-                </td>
+            }
+            else if (item.StopDateTime.Day == DateTime.Now.Day &&
+                     item.StopDateTime.Month == DateTime.Now.Month &&
+                     item.StopDateTime.Year == DateTime.Now.Year)
+            {
+                <tr class="alert-warning">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShortDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LongDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StopDateTime)
+                    </td>
+                    <td>
+                        <a asp-area="Student" asp-controller="Homework" asp-action="HomeworkDetails" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr class="alert-success">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShortDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LongDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StopDateTime)
+                    </td>
+                    <td>
+                        <a asp-area="Student" asp-controller="Homework" asp-action="HomeworkDetails" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
             }
         }
-        </tbody>
-    </table>
+    </tbody>
+</table>

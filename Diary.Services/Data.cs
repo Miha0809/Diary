@@ -17,28 +17,10 @@ namespace Diary.Services
             {
 
                 diaryDbContext.Groups.AddRange(
-                    new Group() {Name = "IT-11"},
-                    new Group() {Name = "IT-12"},
-                    new Group() {Name = "IC-11"},
-                    new Group() {Name = "IC-12"}
-                );
-
-                diaryDbContext.SaveChanges();
-            }
-
-            if (!diaryDbContext.Teachers.Any())
-            {
-                diaryDbContext.Teachers.AddRange(
-                    new Teacher()
-                    {
-                        Age = 26,
-                        FirstName = "Natalia",
-                        LastName = "Zubko",
-                        Email = "natalia@ukr.net",
-                        Phone = "380971710678",
-                        Password = "qwerty",
-                        Groups = diaryDbContext.Groups.ToList()
-                    }
+                    new Group() { Name = "IT-11" },
+                    new Group() { Name = "IT-12" },
+                    new Group() { Name = "IC-11" },
+                    new Group() { Name = "IC-12" }
                 );
 
                 diaryDbContext.SaveChanges();
@@ -104,6 +86,25 @@ namespace Diary.Services
                     new Lesson()
                     {
                         Name = "Protection of Ukraine"
+                    }
+                );
+
+                diaryDbContext.SaveChanges();
+            }
+
+            if (!diaryDbContext.Teachers.Any())
+            {
+                diaryDbContext.Teachers.AddRange(
+                    new Teacher()
+                    {
+                        Age = 26,
+                        FirstName = "Natalia",
+                        LastName = "Zubko",
+                        Email = "natalia@ukr.net",
+                        Phone = "380971710678",
+                        Password = "qwerty",
+                        Groups = diaryDbContext.Groups.ToList(),
+                        Lesson = diaryDbContext.Lessons.FirstOrDefault(l => l.Id == 1)
                     }
                 );
 

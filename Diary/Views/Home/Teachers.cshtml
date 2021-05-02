@@ -10,6 +10,7 @@
             <th>@Html.DisplayNameFor(user => user.FirstName)</th>
             <th>@Html.DisplayNameFor(user => user.LastName)</th>
             <th>@Html.DisplayNameFor(user => user.Age)</th>
+            <th>@Html.DisplayNameFor(user => user.Groups)</th>
             <th>@Html.DisplayNameFor(user => user.Email)</th>
             <th>@Html.DisplayNameFor(user => user.Phone)</th>
             <th></th>
@@ -18,13 +19,20 @@
     <tbody>
         @foreach(var item in Model)
         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Age)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.Phone)</td>
-            </tr>
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Age)</td>
+            <td>
+            @foreach (var group in item.Groups)
+            {
+                @Html.DisplayFor(modelItem => group.Name)
+                <br />
+            }
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+        </tr>
         }
     </tbody>
 </table>

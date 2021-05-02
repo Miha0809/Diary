@@ -49,13 +49,13 @@ namespace Diary.Services.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsReady")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("LessonId")
                         .HasColumnType("int");
 
                     b.Property<string>("LongDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathHomework")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShortDescription")
@@ -97,6 +97,53 @@ namespace Diary.Services.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Lessons");
+                });
+
+            modelBuilder.Entity("Diary.Models.ReadyHomework", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HomeworkId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LongDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StopDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TextToHomework")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("HomeworkId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("ReadyHomeworks");
                 });
 
             modelBuilder.Entity("Diary.Models.Student", b =>
@@ -153,6 +200,9 @@ namespace Diary.Services.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LessonId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
@@ -160,6 +210,8 @@ namespace Diary.Services.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
 
                     b.ToTable("Teachers");
                 });
@@ -190,6 +242,33 @@ namespace Diary.Services.Migrations
                     b.Navigation("Lesson");
                 });
 
+            modelBuilder.Entity("Diary.Models.ReadyHomework", b =>
+                {
+                    b.HasOne("Diary.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Diary.Models.Homework", "Homework")
+                        .WithMany()
+                        .HasForeignKey("HomeworkId");
+
+                    b.HasOne("Diary.Models.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId");
+
+                    b.HasOne("Diary.Models.Student", "Student")
+                        .WithMany("ReadyHomeworks")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Homework");
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Diary.Models.Student", b =>
                 {
                     b.HasOne("Diary.Models.Group", "Group")
@@ -199,9 +278,20 @@ namespace Diary.Services.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("Diary.Models.Teacher", b =>
+                {
+                    b.HasOne("Diary.Models.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId");
+
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("Diary.Models.Student", b =>
                 {
                     b.Navigation("Homeworks");
+
+                    b.Navigation("ReadyHomeworks");
                 });
 
             modelBuilder.Entity("Diary.Models.Teacher", b =>

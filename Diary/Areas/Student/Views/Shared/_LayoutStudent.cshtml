@@ -23,24 +23,25 @@
                             <a class="nav-link text-dark" asp-area="Student" asp-controller="Homework" asp-action="Homeworks">Homeworks</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Student" asp-controller="ReadyHomework" asp-action="ReadyHomeworks">All Ready Homeworks</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Student" asp-controller="Homework" asp-action="Lessons">Lessons</a>
                         </li>
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <ul class="navbar-nav flex-grow-end">
+                    <ul class="navbar-nav flex-grow-end">
+                        @if (User.Identity.IsAuthenticated)
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Student" asp-controller="ProfileStudent" asp-action="Account">Account</a>
                             </li>
-                        </ul>
-                        <ul class="navbar-nav flex-grow-end">
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Authorization" asp-action="LogOut">log out</a>
                             </li>
-                        </ul>
-                    }
+                        }
+                    </ul>
                 </div>
             </div>
         </nav>
