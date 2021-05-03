@@ -6,7 +6,8 @@ namespace Diary.Models
     public class Student
     {
         [Key] public int Id { get; set; }
-        [DataType(DataType.Text)] public int Age { get; set; }
+        [DataType(DataType.Text)] public ushort Age { get; set; }
+        [DataType(DataType.Text)] public ushort Rating { get; set; }
 
         [DataType(DataType.Text)] public string FirstName { get; set; }
         [DataType(DataType.Text)] public string LastName { get; set; }

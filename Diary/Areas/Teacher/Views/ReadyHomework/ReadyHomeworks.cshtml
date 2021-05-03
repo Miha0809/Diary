@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Diary.Models.ReadyHomework>
 @{
     ViewData["Title"] = "ReadyHomeworks";
-    Layout = "_LayoutStudent";
+    Layout = "_LayoutTeacher";
 }
 
 <h1>ReadyHomeworks</h1>
@@ -15,12 +15,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.LongDescription)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TextToHomework)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PathHomework)
-            </th>
+            @if (!string.IsNullOrWhiteSpace(Model.First().TextToHomework))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.TextToHomework)
+                </th>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.First().PathHomework))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.PathHomework)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.StartDateTime)
             </th>
@@ -45,8 +51,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ShortDescription)
@@ -54,12 +59,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LongDescription)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TextToHomework)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PathHomework)
-            </td>
+            @if (!string.IsNullOrWhiteSpace(item.TextToHomework))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.TextToHomework)
+                </td>
+            }
+            @if (!string.IsNullOrWhiteSpace(item.PathHomework))
+            {
+                <td>
+                    <button><a download="@Html.DisplayFor(modelItem => item.PathHomework)">Download</a></button>
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.StartDateTime)
             </td>
@@ -69,19 +80,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DeliveryDateTime)
             </td>
-            <td>
+            <th>
                 @Html.DisplayFor(model => item.Group.Name)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.Lesson.Name)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.Homework.ShortDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Student.Email)
-            </td>
+            </th>
+            <th>
+                <a asp-area="Teacher" asp-controller="Student" asp-action="Details" asp-route-id="@item.Student.Id">@Html.DisplayFor(model => item.Student.FirstName) @Html.DisplayFor(model => item.Student.LastName)</a>
+            </th>
         </tr>
-        }
+    }
     </tbody>
 </table>

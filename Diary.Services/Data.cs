@@ -143,6 +143,7 @@ namespace Diary.Services
                         PathHomework = homework.PathHomework,
                         StartDateTime = homework.StartDateTime,
                         StopDateTime = homework.StopDateTime,
+                        DeliveryDateTime = DateTime.Now,
                         Group = homework.Group,
                         Lesson = homework.Lesson,
                         Homework = homework,

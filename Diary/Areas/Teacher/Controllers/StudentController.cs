@@ -19,7 +19,7 @@ namespace Diary.Areas.Teacher.Controllers
 
         public IActionResult Students()
         {
-            return View(_diaryDbContext.Students.ToList());
+            return View(_diaryDbContext.Students.OrderByDescending(x => x.Rating).ToList());
         }
 
         [HttpGet]

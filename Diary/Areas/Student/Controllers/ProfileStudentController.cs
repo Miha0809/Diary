@@ -14,6 +14,7 @@ namespace Diary.Controllers
 
         public ProfileStudentController(DiaryDbContext diaryDbContext)
         {
+            ViewBag.Rating = this._diaryDbContext.Students.Select(x => x).First(x => x.Email.Equals(User.Identity.Name)).Rating;
             this._diaryDbContext = diaryDbContext;
         }
 

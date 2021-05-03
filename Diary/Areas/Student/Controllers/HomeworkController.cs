@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using Diary.Models;
 using Diary.Services;
@@ -23,8 +24,8 @@ namespace Diary.Areas.Student.Controllers
 
         public IActionResult Homeworks()
         {
-            var student = _diaryDbContext.Students.First(s => s.Email == User.Identity.Name);
-            var group = _diaryDbContext.Homeworks.Select(h => h).Where(h => h.Group.Id == student.Group.Id);
+            var student = this._diaryDbContext.Students.First(s => s.Email == User.Identity.Name);
+            var group = this._diaryDbContext.Homeworks.Select(h => h).Where(h => h.Group.Id == student.Group.Id);
 
             return View(group.OrderBy(x => x.StopDateTime).ToList());
         }
@@ -37,7 +38,7 @@ namespace Diary.Areas.Student.Controllers
                 return NotFound("id homework for details == null");
             }
 
-            return View(_diaryDbContext.Homeworks.Find(id));
+            return View(this._diaryDbContext.Homeworks.Find(id));
         }
 
         [HttpPost]
@@ -47,7 +48,7 @@ namespace Diary.Areas.Student.Controllers
             // TODO: null is sent to object null
             // TODO: save lesson this homework
 
-            var student = _diaryDbContext.Students.FirstOrDefault(s => s.Email.Equals(User.Identity.Name));
+            var student = this._diaryDbContext.Students.FirstOrDefault(s => s.Email.Equals(User.Identity.Name));
             var readyHomework = new ReadyHomework()
             {
                 ShortDescription = homework.ShortDescription,
@@ -56,17 +57,16 @@ namespace Diary.Areas.Student.Controllers
                 PathHomework = homework.PathHomework,
                 StartDateTime = homework.StartDateTime,
                 StopDateTime = homework.StopDateTime,
+                DeliveryDateTime = DateTime.Now,
                 Group = student.Group,
                 Lesson = homework.Lesson,
                 Homework = homework,
                 Student = student
             };
 
-            if (homework == null ||
-                readyHomework == null ||
-                HttpContext.Request.Form.Files[0] == null)
+            if (homework == null || readyHomework == null)
             {
-                return NotFound("homework == null || readyHomework == null || HttpContext.Request.Form.Files[0] == null");
+                return NotFound("homework == null || readyHomework == null");
             }
 
             var uploadedFile = HttpContext.Request.Form.Files[0];
@@ -83,20 +83,21 @@ namespace Diary.Areas.Student.Controllers
             homework.Group = h.Group;
             homework.Lesson = h.Lesson;*/
 
-            _diaryDbContext.ReadyHomeworks.Add(readyHomework);
-            _diaryDbContext.SaveChanges();
+
+            // TODO: remove homework ready by student
+
+            foreach (var item in this._diaryDbContext.Students.ToList())
+            {
+                foreach (var itemHomework in item.Homeworks)
+                {
+
+                    this._diaryDbContext.Students.Select(x => x.Homeworks.Select(y => y.Id == 1));
+                }
+            }
+
+            this._diaryDbContext.ReadyHomeworks.Add(readyHomework);
 
             return RedirectToAction("Homeworks", "Homework");
-        }
-
-        private void addReadyHomework(ReadyHomework readyHomework)
-        {
-            
-        }
-
-        public IActionResult Lessons()
-        {
-            return View(_diaryDbContext.Lessons.ToList());
         }
     }
 }
