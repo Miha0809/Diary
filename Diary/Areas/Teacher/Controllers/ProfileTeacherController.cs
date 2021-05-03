@@ -20,13 +20,13 @@ namespace Diary.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(this._diaryDbContext.Students.OrderByDescending(x => x.Rating).ToList());
         }
 
         [HttpGet]
         public IActionResult Accout()
         {
-            var teacher = _diaryDbContext.Teachers.FirstOrDefault(x => x.Email.Equals(User.Identity.Name));
+            var teacher = this._diaryDbContext.Teachers.FirstOrDefault(x => x.Email.Equals(User.Identity.Name));
 
             if (teacher == null)
             {
@@ -44,10 +44,10 @@ namespace Diary.Controllers
                 return NotFound("id == null");
             }
 
-            ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
-            ViewBag.Lessons = new SelectList(_diaryDbContext.Lessons.ToList(), "Id", "Name");
+            ViewBag.Groups = new SelectList(this._diaryDbContext.Groups.ToList(), "Id", "Name");
+            ViewBag.Lessons = new SelectList(this._diaryDbContext.Lessons.ToList(), "Id", "Name");
 
-            return View(_diaryDbContext.Teachers.Find(id));
+            return View(this._diaryDbContext.Teachers.Find(id));
         }
 
         [HttpPost]
@@ -58,8 +58,8 @@ namespace Diary.Controllers
                 return NotFound("teacher == null");
             }
 
-            _diaryDbContext.Teachers.Update(teacher);
-            _diaryDbContext.SaveChanges();
+            this._diaryDbContext.Teachers.Update(teacher);
+            this._diaryDbContext.SaveChanges();
 
             return RedirectToAction("Accout", "ProfileTeacher");
         }
