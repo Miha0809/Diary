@@ -13,9 +13,6 @@ namespace Diary.Areas.Teacher.Controllers
     {
         private readonly DiaryDbContext _diaryDbContext;
 
-        private Group _group;
-        private Lesson _lesson;
-
         public HomeworkController(DiaryDbContext diaryDbContext)
         {
             this._diaryDbContext = diaryDbContext;
@@ -120,5 +117,6 @@ namespace Diary.Areas.Teacher.Controllers
 
             return RedirectToAction("Homeworks", "Homework");
         }
+
     }
 }
