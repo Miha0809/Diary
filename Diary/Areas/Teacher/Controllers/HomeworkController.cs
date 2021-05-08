@@ -73,11 +73,12 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("id == null");
             }
 
-            // TODO: урок, до якого відноситься ця ДЗ
-            // TODO: група, до якого відноситься ця ДЗ
+            var homework = _diaryDbContext.Homeworks.Select(x => x).First(x => x.Id == id);
 
-            ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
-            ViewBag.Lessons = new SelectList(_diaryDbContext.Lessons.ToList(), "Id", "Name");
+            ViewBag.Group = this._diaryDbContext.Groups.Select(group => group)
+                .First(group => group.Id == homework.Group.Id);
+            ViewBag.Lesson = this._diaryDbContext.Lessons.Select(lesson => lesson)
+                .First(lesson => lesson.Id == homework.Lesson.Id);
 
             return View(_diaryDbContext.Homeworks.Find(id));
         }
@@ -90,14 +91,8 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("homework == null");
             }
 
-            // TODO: зберегти групу, до якого відноситься ця ДЗ
-            // TODO: зберегти урок, до якого відноситься ця ДЗ
-
-            /*var h = _diaryDbContext.Homeworks.Select(h => h).First(h => h.Id == homework.Id);
+            // TODO: when you press save button add new group and lesson in database
             
-            homework.Group = h.Group;
-            homework.Lesson = h.Lesson;*/
-
             _diaryDbContext.Homeworks.Update(homework);
             _diaryDbContext.SaveChanges();
 

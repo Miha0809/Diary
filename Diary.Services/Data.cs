@@ -140,7 +140,6 @@ namespace Diary.Services
                         ShortDescription = homework.ShortDescription,
                         LongDescription = homework.LongDescription,
                         TextToHomework = homework.TextToHomework,
-                        PathHomework = homework.PathHomework,
                         StartDateTime = homework.StartDateTime,
                         StopDateTime = homework.StopDateTime,
                         DeliveryDateTime = DateTime.Now,

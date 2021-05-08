@@ -30,17 +30,6 @@ namespace Diary.Areas.Student.Controllers
             return View(group.OrderBy(x => x.StopDateTime).ToList());
         }
 
-        [HttpGet]
-        public IActionResult HomeworkDetails(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound("id homework for details == null");
-            }
-
-            return View(this._diaryDbContext.Homeworks.Find(id));
-        }
-
         [HttpPost]
         public IActionResult HomeworkDetails(Homework homework)
         {
@@ -54,7 +43,6 @@ namespace Diary.Areas.Student.Controllers
                 ShortDescription = homework.ShortDescription,
                 LongDescription = homework.LongDescription,
                 TextToHomework = homework.TextToHomework,
-                PathHomework = homework.PathHomework,
                 StartDateTime = homework.StartDateTime,
                 StopDateTime = homework.StopDateTime,
                 DeliveryDateTime = DateTime.Now,
@@ -79,25 +67,31 @@ namespace Diary.Areas.Student.Controllers
 
             readyHomework.PathHomework = path;
 
-            /*var h = _diaryDbContext.Homeworks.Select(h => h).First(h => h.Id == homework.Id);
-            homework.Group = h.Group;
-            homework.Lesson = h.Lesson;*/
-
-
             // TODO: remove homework ready by student
 
             foreach (var item in this._diaryDbContext.Students.ToList())
             {
                 foreach (var itemHomework in item.Homeworks)
                 {
-
                     this._diaryDbContext.Students.Select(x => x.Homeworks.Select(y => y.Id == 1));
                 }
             }
 
             this._diaryDbContext.ReadyHomeworks.Add(readyHomework);
+            this._diaryDbContext.SaveChanges();
 
             return RedirectToAction("Homeworks", "Homework");
+        }
+
+        [HttpGet]
+        public IActionResult HomeworkDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound("id homework for details == null");
+            }
+
+            return View(this._diaryDbContext.Homeworks.Find(id));
         }
     }
 }
