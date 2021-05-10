@@ -19,6 +19,21 @@ namespace Diary.Services.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Diary.Models.Assessment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Mark")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Assessments");
+                });
+
             modelBuilder.Entity("Diary.Models.Group", b =>
                 {
                     b.Property<int>("Id")
@@ -103,7 +118,7 @@ namespace Diary.Services.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Assessment")
+                    b.Property<int?>("AssessmentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DeliveryDateTime")
@@ -140,6 +155,8 @@ namespace Diary.Services.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssessmentId");
 
                     b.HasIndex("GroupId");
 
@@ -253,6 +270,10 @@ namespace Diary.Services.Migrations
 
             modelBuilder.Entity("Diary.Models.ReadyHomework", b =>
                 {
+                    b.HasOne("Diary.Models.Assessment", "Assessment")
+                        .WithMany()
+                        .HasForeignKey("AssessmentId");
+
                     b.HasOne("Diary.Models.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId");
@@ -268,6 +289,8 @@ namespace Diary.Services.Migrations
                     b.HasOne("Diary.Models.Student", "Student")
                         .WithMany("ReadyHomeworks")
                         .HasForeignKey("StudentId");
+
+                    b.Navigation("Assessment");
 
                     b.Navigation("Group");
 

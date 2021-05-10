@@ -94,7 +94,7 @@ namespace Diary.Areas.Teacher.Controllers
             return View(_diaryDbContext.Students.Find(id));
         }
         
-        /*[HttpPost]
+        [HttpPost]
         public IActionResult Edit(Models.Student student)
         {
             if (student == null)
@@ -106,7 +106,7 @@ namespace Diary.Areas.Teacher.Controllers
             _diaryDbContext.SaveChanges();
 
             return RedirectToAction("Students", "Student");
-        }*/
+        }
 
         public IActionResult Details(int? id)
         {

@@ -67,26 +67,11 @@ namespace Diary.Services
             if (!diaryDbContext.Lessons.Any())
             {
                 diaryDbContext.Lessons.AddRange(
-                    new Lesson()
-                    {
-                        Name = "Math"
-                    },
-                    new Lesson()
-                    {
-                        Name = "History"
-                    },
-                    new Lesson()
-                    {
-                        Name = "Geography"
-                    },
-                    new Lesson()
-                    {
-                        Name = "Physics"
-                    },
-                    new Lesson()
-                    {
-                        Name = "Protection of Ukraine"
-                    }
+                    new Lesson() { Name = "Math" },
+                    new Lesson() { Name = "History" },
+                    new Lesson() { Name = "Geography" },
+                    new Lesson() { Name = "Physics" },
+                    new Lesson() { Name = "Protection of Ukraine" }
                 );
 
                 diaryDbContext.SaveChanges();
@@ -139,15 +124,35 @@ namespace Diary.Services
                     {
                         ShortDescription = homework.ShortDescription,
                         LongDescription = homework.LongDescription,
-                        TextToHomework = homework.TextToHomework,
                         StartDateTime = homework.StartDateTime,
                         StopDateTime = homework.StopDateTime,
                         DeliveryDateTime = DateTime.Now,
+                        Assessment = new Assessment() { Mark = 8 },
                         Group = homework.Group,
                         Lesson = homework.Lesson,
                         Homework = homework,
-                        Student = student
+                        Student = student,
                     }
+                );
+
+                diaryDbContext.SaveChanges();
+            }
+
+            if (!diaryDbContext.Assessments.Any())
+            {
+                diaryDbContext.Assessments.AddRange(
+                    new Assessment() { Mark = 1 },
+                    new Assessment() { Mark = 2 },
+                    new Assessment() { Mark = 3 },
+                    new Assessment() { Mark = 4 },
+                    new Assessment() { Mark = 5 },
+                    new Assessment() { Mark = 6 },
+                    new Assessment() { Mark = 7 },
+                    new Assessment() { Mark = 8 },
+                    new Assessment() { Mark = 9 },
+                    new Assessment() { Mark = 10 },
+                    new Assessment() { Mark = 11 },
+                    new Assessment() { Mark = 12 }
                 );
 
                 diaryDbContext.SaveChanges();

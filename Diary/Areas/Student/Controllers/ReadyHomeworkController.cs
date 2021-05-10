@@ -18,7 +18,19 @@ namespace Diary.Areas.Student.Controllers
 
         public IActionResult ReadyHomeworks()
         {
-            return View(_diaryDbContext.ReadyHomeworks.ToList());
+            var myHomeworks = _diaryDbContext.ReadyHomeworks.Select(x => x)
+                .Where(x => x.Student.Email.Equals(User.Identity.Name)).ToList();
+            return View(myHomeworks);
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound("id == null");
+            }
+
+            return View(this._diaryDbContext.ReadyHomeworks.Find(id));
         }
     }
 }

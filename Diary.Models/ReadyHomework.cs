@@ -7,8 +7,6 @@ namespace Diary.Models
     {
         [Key] public int Id { get; set; }
 
-        [DataType(DataType.Text)] public ushort Assessment { get; set; }
-
         [DataType(DataType.Text)] public string ShortDescription { get; set; }
         [DataType(DataType.MultilineText)] public string LongDescription { get; set; }
         [DataType(DataType.MultilineText)] public string TextToHomework { get; set; }
@@ -17,6 +15,8 @@ namespace Diary.Models
         [DataType(DataType.DateTime)] public virtual DateTime StartDateTime { get; set; }
         [DataType(DataType.DateTime)] public virtual DateTime StopDateTime { get; set; }
         [DataType(DataType.DateTime)] public virtual DateTime DeliveryDateTime { get; set; }
+
+        public virtual Assessment Assessment { get; set; }
         public virtual Group Group { get; set; }
         public virtual Lesson Lesson { get; set; }
         public virtual Homework Homework { get; set; }

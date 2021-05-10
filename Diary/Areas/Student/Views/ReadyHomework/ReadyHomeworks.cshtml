@@ -15,12 +15,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.LongDescription)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TextToHomework)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PathHomework)
-            </th>
+            @if (!string.IsNullOrWhiteSpace(Model.First().TextToHomework))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.TextToHomework)
+                </th>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.First().PathHomework))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.PathHomework)
+                </th>
+            }
+
             <th>
                 @Html.DisplayNameFor(model => model.StartDateTime)
             </th>
@@ -31,16 +38,12 @@
                 @Html.DisplayNameFor(model => model.DeliveryDateTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Group)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Lesson)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Homework)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student)
             </th>
         </tr>
     </thead>
@@ -54,12 +57,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LongDescription)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TextToHomework)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PathHomework)
-            </td>
+            @if (!string.IsNullOrWhiteSpace(item.TextToHomework))
+            {
+                <td>
+                    <textarea>@Html.DisplayFor(modelItem => item.TextToHomework)</textarea>
+                </td>    
+            }
+            @if (!string.IsNullOrWhiteSpace(item.PathHomework))
+            {
+                <td>
+                    <button><a download="@Html.DisplayFor(modelItem => item.PathHomework)">Download</a></button>
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.StartDateTime)
             </td>
@@ -70,16 +79,13 @@
                 @Html.DisplayFor(modelItem => item.DeliveryDateTime)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Group.Name)
-            </td>
-            <td>
                 @Html.DisplayFor(model => item.Lesson.Name)
             </td>
             <td>
                 @Html.DisplayFor(model => item.Homework.ShortDescription)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Student.Email)
+                <a asp-area="Student" asp-controller="ReadyHomework" asp-action="Details" asp-route-id="@item.Id">Details</a>
             </td>
         </tr>
         }

@@ -29,9 +29,20 @@ namespace Diary.Areas.Student.Controllers
 
             return View(group.OrderBy(x => x.StopDateTime).ToList());
         }
+        
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound("id homework for details == null");
+            }
+
+            return View(this._diaryDbContext.Homeworks.Find(id));
+        }
 
         [HttpPost]
-        public IActionResult HomeworkDetails(Homework homework)
+        public IActionResult Details(Homework homework)
         {
 
             // TODO: null is sent to object null
@@ -42,7 +53,6 @@ namespace Diary.Areas.Student.Controllers
             {
                 ShortDescription = homework.ShortDescription,
                 LongDescription = homework.LongDescription,
-                TextToHomework = homework.TextToHomework,
                 StartDateTime = homework.StartDateTime,
                 StopDateTime = homework.StopDateTime,
                 DeliveryDateTime = DateTime.Now,
@@ -81,17 +91,6 @@ namespace Diary.Areas.Student.Controllers
             this._diaryDbContext.SaveChanges();
 
             return RedirectToAction("Homeworks", "Homework");
-        }
-
-        [HttpGet]
-        public IActionResult HomeworkDetails(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound("id homework for details == null");
-            }
-
-            return View(this._diaryDbContext.Homeworks.Find(id));
         }
     }
 }

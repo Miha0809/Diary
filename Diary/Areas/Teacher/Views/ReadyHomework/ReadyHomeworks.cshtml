@@ -37,16 +37,12 @@
                 @Html.DisplayNameFor(model => model.DeliveryDateTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Group)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Lesson)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Homework)
+                @Html.DisplayNameFor(model => model.Student)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student)
             </th>
         </tr>
     </thead>
@@ -62,7 +58,7 @@
             @if (!string.IsNullOrWhiteSpace(item.TextToHomework))
             {
                 <td>
-                    @Html.DisplayFor(modelItem => item.TextToHomework)
+                    <textarea>@Html.DisplayFor(modelItem => item.TextToHomework)</textarea>
                 </td>
             }
             @if (!string.IsNullOrWhiteSpace(item.PathHomework))
@@ -81,16 +77,13 @@
                 @Html.DisplayFor(modelItem => item.DeliveryDateTime)
             </td>
             <th>
-                @Html.DisplayFor(model => item.Group.Name)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.Lesson.Name)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.Homework.ShortDescription)
+                @Html.DisplayFor(modelItem => item.Lesson.Name)
             </th>
             <th>
                 <a asp-area="Teacher" asp-controller="Student" asp-action="Details" asp-route-id="@item.Student.Id">@Html.DisplayFor(model => item.Student.FirstName) @Html.DisplayFor(model => item.Student.LastName)</a>
+            </th>
+            <th>
+                <a asp-area="Teacher" asp-controller="ReadyHomework" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
             </th>
         </tr>
     }

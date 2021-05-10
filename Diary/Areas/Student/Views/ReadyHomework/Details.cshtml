@@ -1,0 +1,73 @@
+﻿@model Diary.Models.ReadyHomework
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_LayoutStudent";
+}
+
+<h1>Details</h1>
+
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Lesson)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Lesson.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ShortDescription)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ShortDescription)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.LongDescription)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.LongDescription)
+    </dd>
+    @if (!string.IsNullOrWhiteSpace(Model.TextToHomework))
+    {
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TextToHomework)
+        </dt>
+        <dd class="col-sm-10">
+            <textarea>@Html.DisplayFor(model => model.TextToHomework)</textarea>
+        </dd>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.PathHomework))
+    {
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PathHomework)
+        </dt>
+        <dd class="col-sm-10">
+            <button><a download="@Html.DisplayFor(model => model.PathHomework)">Download</a></button>
+            @Html.DisplayFor(model => model.PathHomework)
+        </dd>
+    }
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.StartDateTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.StartDateTime)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.StopDateTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.StopDateTime)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.DeliveryDateTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.DeliveryDateTime)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Assessment)
+    </dt>
+    <dd class="col-sm-10 alert-success">
+        @Html.DisplayFor(model => model.Assessment)
+    </dd>
+</dl>

@@ -7,6 +7,7 @@ namespace Diary.Services
     {
         public DiaryDbContext(DbContextOptions<DiaryDbContext> options) : base(options) {  }
 
+        public virtual DbSet<Assessment> Assessments { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
