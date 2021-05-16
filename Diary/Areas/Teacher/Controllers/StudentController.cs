@@ -89,7 +89,11 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("id == null");
             }
 
+            var student = this._diaryDbContext.Students
+                .First(student => student.Id == id);
+            
             ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
+            ViewBag.Password = student.Password;
 
             return View(_diaryDbContext.Students.Find(id));
         }
@@ -102,7 +106,35 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("Student == null");
             }
 
-            _diaryDbContext.Students.Update(student);
+            var st = this._diaryDbContext.Students
+                .First(st => st.Email.Equals(student.Email));
+            var group = this._diaryDbContext.Groups
+                .First(group => group.Id == student.Group.Id);
+            var homeworks = this._diaryDbContext.Homeworks.Select(x => x)
+                .Where(homework => homework.Group.Id == group.Id).ToList();
+            var readyHomeworks = this._diaryDbContext.ReadyHomeworks.Select(x => x)
+                .Where(readyHomework => readyHomework.Group.Id == group.Id).ToList();
+
+            student.Group = group;
+            student.Homeworks = homeworks;
+            student.ReadyHomeworks = readyHomeworks;
+
+            var update = new Models.Student()
+            {
+                Age = student.Age,
+                Rating = student.Rating,
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                Email = student.Email,
+                Phone = student.Phone,
+                Password = student.Password,
+                Group = group,
+                Homeworks = homeworks,
+                ReadyHomeworks = readyHomeworks
+            };
+
+            this._diaryDbContext.Students.Remove(student);
+            _diaryDbContext.Students.Update(update);
             _diaryDbContext.SaveChanges();
 
             return RedirectToAction("Students", "Student");

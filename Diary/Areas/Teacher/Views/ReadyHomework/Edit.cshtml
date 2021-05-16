@@ -1,0 +1,82 @@
+﻿@model Diary.Models.ReadyHomework
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_LayoutTeacher";
+}
+
+<h1>Edit</h1>
+
+<h4>ReadyHomework</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ShortDescription" class="control-label"></label>
+                <input asp-for="ShortDescription" class="form-control" />
+                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LongDescription" class="control-label"></label>
+                <textarea asp-for="LongDescription" class="form-control"></textarea>
+                <span asp-validation-for="LongDescription" class="text-danger"></span>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.TextToHomework))
+            {
+                <div class="form-group">
+                    <label asp-for="TextToHomework" class="control-label"></label>
+                    <textarea asp-for="TextToHomework" class="form-control"></textarea>
+                    <span asp-validation-for="TextToHomework" class="text-danger"></span>
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.PathHomework))
+            {
+                <div class="form-group">
+                    <label asp-for="PathHomework" class="control-label"></label>
+                    <input asp-for="PathHomework" class="form-control" />
+                    <span asp-validation-for="PathHomework" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="StartDateTime" class="control-label"></label>
+                <input asp-for="StartDateTime" class="form-control" />
+                <span asp-validation-for="StartDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StopDateTime" class="control-label"></label>
+                <input asp-for="StopDateTime" class="form-control" />
+                <span asp-validation-for="StopDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeliveryDateTime" class="control-label"></label>
+                <input asp-for="DeliveryDateTime" class="form-control" />
+                <span asp-validation-for="DeliveryDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Assessment.Id" asp-items="ViewBag.Assessment"></select>
+            </div>
+            <div class="form-group">
+                <input asp-for="Group.Id" value="@ViewBag.Group.Id" />
+            </div>
+            <div class="form-group">
+                <input asp-for="Lesson.Id" value="@ViewBag.Lesson.Id" />
+            </div>
+            <div class="form-group">
+                <input asp-for="Homework.Id" value="@ViewBag.Homework.Id" />
+            </div>
+            <div class="form-group">
+                <input asp-for="Student.Id" value="@ViewBag.Student.Id" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ReadyHomeworks">Back to List</a>
+</div>
+

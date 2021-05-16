@@ -114,30 +114,6 @@ namespace Diary.Services
                 diaryDbContext.SaveChanges();
             }
 
-            var homework = diaryDbContext.Homeworks.First(h => h.Id == 1);
-            var student = diaryDbContext.Students.First(s => s.Id == 3);
-
-            if (!diaryDbContext.ReadyHomeworks.Any())
-            {
-                diaryDbContext.ReadyHomeworks.AddRange(
-                   new ReadyHomework()
-                    {
-                        ShortDescription = homework.ShortDescription,
-                        LongDescription = homework.LongDescription,
-                        StartDateTime = homework.StartDateTime,
-                        StopDateTime = homework.StopDateTime,
-                        DeliveryDateTime = DateTime.Now,
-                        Assessment = new Assessment() { Mark = 8 },
-                        Group = homework.Group,
-                        Lesson = homework.Lesson,
-                        Homework = homework,
-                        Student = student,
-                    }
-                );
-
-                diaryDbContext.SaveChanges();
-            }
-
             if (!diaryDbContext.Assessments.Any())
             {
                 diaryDbContext.Assessments.AddRange(
@@ -153,6 +129,30 @@ namespace Diary.Services
                     new Assessment() { Mark = 10 },
                     new Assessment() { Mark = 11 },
                     new Assessment() { Mark = 12 }
+                );
+
+                diaryDbContext.SaveChanges();
+            }
+
+            var homework = diaryDbContext.Homeworks.First(h => h.Id == 1);
+            var student = diaryDbContext.Students.First(s => s.Id == 3);
+
+            if (!diaryDbContext.ReadyHomeworks.Any())
+            {
+                diaryDbContext.ReadyHomeworks.AddRange(
+                   new ReadyHomework()
+                    {
+                        ShortDescription = homework.ShortDescription,
+                        LongDescription = homework.LongDescription,
+                        StartDateTime = homework.StartDateTime,
+                        StopDateTime = homework.StopDateTime,
+                        DeliveryDateTime = DateTime.Now,
+                        Assessment = diaryDbContext.Assessments.First(mark => mark.Id == 8),
+                        Group = homework.Group,
+                        Lesson = homework.Lesson,
+                        Homework = homework,
+                        Student = student,
+                    }
                 );
 
                 diaryDbContext.SaveChanges();

@@ -33,6 +33,8 @@ namespace Diary.Controllers
                 return NotFound("teacher == null");
             }
 
+            ViewBag.Password = teacher.Password;
+
             return View(teacher);
         }
 
@@ -44,8 +46,13 @@ namespace Diary.Controllers
                 return NotFound("id == null");
             }
 
+            var teacher = this._diaryDbContext.Teachers
+                .First(teacher => teacher.Id == id);
+            var lesson = this._diaryDbContext.Lessons.Select(lessons => lessons)
+                .Where(lesson => lesson.Id == teacher.Lesson.Id).ToList();
+
             ViewBag.Groups = new SelectList(this._diaryDbContext.Groups.ToList(), "Id", "Name");
-            ViewBag.Lessons = new SelectList(this._diaryDbContext.Lessons.ToList(), "Id", "Name");
+            ViewBag.Lessons = new SelectList(lesson, "Id", "Name");
 
             return View(this._diaryDbContext.Teachers.Find(id));
         }

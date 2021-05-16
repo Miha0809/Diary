@@ -16,7 +16,7 @@ namespace Diary.Areas.Student.Controllers
         private readonly DiaryDbContext _diaryDbContext;
         private readonly IWebHostEnvironment _appEnvironment;
 
-        public HomeworkController(DiaryDbContext diaryDbContext, IWebHostEnvironment  appEnvironment)
+        public HomeworkController(DiaryDbContext diaryDbContext, IWebHostEnvironment appEnvironment)
         {
             this._diaryDbContext = diaryDbContext;
             this._appEnvironment = appEnvironment;
@@ -29,7 +29,7 @@ namespace Diary.Areas.Student.Controllers
 
             return View(group.OrderBy(x => x.StopDateTime).ToList());
         }
-        
+
         [HttpGet]
         public IActionResult Details(int? id)
         {
@@ -76,17 +76,8 @@ namespace Diary.Areas.Student.Controllers
             }
 
             readyHomework.PathHomework = path;
-
             // TODO: remove homework ready by student
-
-            foreach (var item in this._diaryDbContext.Students.ToList())
-            {
-                foreach (var itemHomework in item.Homeworks)
-                {
-                    this._diaryDbContext.Students.Select(x => x.Homeworks.Select(y => y.Id == 1));
-                }
-            }
-
+            
             this._diaryDbContext.ReadyHomeworks.Add(readyHomework);
             this._diaryDbContext.SaveChanges();
 

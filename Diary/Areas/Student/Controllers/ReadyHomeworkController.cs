@@ -20,6 +20,12 @@ namespace Diary.Areas.Student.Controllers
         {
             var myHomeworks = _diaryDbContext.ReadyHomeworks.Select(x => x)
                 .Where(x => x.Student.Email.Equals(User.Identity.Name)).ToList();
+
+            if (myHomeworks.Count == 0)
+            {
+                return NotFound("You not have ready homeworks!");
+            }
+
             return View(myHomeworks);
         }
 

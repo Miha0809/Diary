@@ -12,7 +12,7 @@ namespace Diary.Models
         [DataType(DataType.Text)] public string LastName { get; set; }
         [DataType(DataType.EmailAddress)] public string Email { get; set; }
         [DataType(DataType.PhoneNumber)] public string Phone { get; set; }
-        [DataType(DataType.Password)] public string Password { get; set; }
+        [DataType(DataType.Text)] public string Password { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
         public virtual Lesson Lesson { get; set; }

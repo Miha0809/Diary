@@ -26,8 +26,13 @@ namespace Diary.Areas.Teacher.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            ViewBag.Groups = new SelectList(_diaryDbContext.Groups.ToList(), "Id", "Name");
-            ViewBag.Lessons = new SelectList(_diaryDbContext.Lessons.ToList(), "Id", "Name");
+            var teacher = this._diaryDbContext.Teachers.First(teacher => teacher.Email.Equals(User.Identity.Name));
+            
+            var lessons = this._diaryDbContext.Lessons.Select(lesson => lesson)
+                .Where(lesson => lesson.Id == teacher.Lesson.Id).ToList();
+
+            ViewBag.Groups = new SelectList(this._diaryDbContext.Groups.ToList(), "Id", "Name");
+            ViewBag.Lesson = new SelectList(lessons, "Id", "Name");
 
             return View();
         }
@@ -45,8 +50,10 @@ namespace Diary.Areas.Teacher.Controllers
                 homework.Group != null &&
                 homework.Lesson != null)
             {
-                var group = _diaryDbContext.Groups.FirstOrDefault(x => x.Id == homework.Group.Id);
-                var lesson = _diaryDbContext.Lessons.FirstOrDefault(x => x.Id == homework.Lesson.Id);
+                var group = this._diaryDbContext.Groups
+                    .First(group => group.Id == homework.Group.Id);
+                var lesson = this._diaryDbContext.Lessons
+                    .First(lesson => lesson.Id == homework.Lesson.Id);
 
                 _diaryDbContext.Homeworks.Add(new Homework()
                 {
@@ -73,13 +80,6 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("id == null");
             }
 
-            var homework = _diaryDbContext.Homeworks.Select(x => x).First(x => x.Id == id);
-
-            ViewBag.Group = this._diaryDbContext.Groups.Select(group => group)
-                .First(group => group.Id == homework.Group.Id);
-            ViewBag.Lesson = this._diaryDbContext.Lessons.Select(lesson => lesson)
-                .First(lesson => lesson.Id == homework.Lesson.Id);
-
             return View(_diaryDbContext.Homeworks.Find(id));
         }
 
@@ -91,12 +91,29 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("homework == null");
             }
 
-            // TODO: when you press save button add new group and lesson in database
-            
-            _diaryDbContext.Homeworks.Update(homework);
+            var group = this._diaryDbContext.Groups
+                .First(group => group.Id == homework.Group.Id);
+            var lesson = this._diaryDbContext.Lessons
+                .First(lesson => lesson.Id == homework.Lesson.Id);
+
+            homework.Group = group;
+            homework.Lesson = lesson;
+
+            var update = new Homework()
+            {
+                ShortDescription = homework.ShortDescription,
+                LongDescription = homework.LongDescription,
+                StartDateTime = homework.StartDateTime,
+                StopDateTime = homework.StopDateTime,
+                Group = group,
+                Lesson = lesson
+            };
+
+            _diaryDbContext.Homeworks.Remove(homework);
+            _diaryDbContext.Homeworks.Update(update);
             _diaryDbContext.SaveChanges();
 
-            return View();
+            return RedirectToAction("Homeworks", "Homework");
         }
 
         [HttpGet]

@@ -35,13 +35,13 @@ namespace Diary.Areas.Teacher.Controllers
 
             ViewBag.Assessment = new SelectList(this._diaryDbContext.Assessments.ToList(), "Id", "Mark");
             ViewBag.Group = this._diaryDbContext.Groups.Select(group => group)
-                .Where(group => thisHomework.Group.Id == group.Id);
+                .First(group => thisHomework.Group.Id == group.Id);
             ViewBag.Lesson = this._diaryDbContext.Lessons.Select(lesson => lesson)
-                .Where(lesson => thisHomework.Lesson.Id == lesson.Id);
+                .First(lesson => thisHomework.Lesson.Id == lesson.Id);
             ViewBag.Homework = this._diaryDbContext.ReadyHomeworks.Select(readyHomeworks => readyHomeworks)
-                .Where(readyHomeworks => thisHomework == readyHomeworks);
+                .First(readyHomeworks => thisHomework == readyHomeworks);
             ViewBag.Student = this._diaryDbContext.Students.Select(student => student)
-                .Where(student => thisHomework.Student.Id == student.Id);
+                .First(student => thisHomework.Student.Email.Equals(student.Email));
 
             return View(_diaryDbContext.ReadyHomeworks.Find(id));
         }
@@ -54,6 +54,23 @@ namespace Diary.Areas.Teacher.Controllers
                 return NotFound("readyHomework == null");
             }
 
+            var assessment = this._diaryDbContext.Assessments
+                .First(assessment => assessment.Id == readyHomework.Assessment.Id);
+            var group = this._diaryDbContext.Groups
+                .First(group => group.Id == readyHomework.Group.Id);
+            var lesson = this._diaryDbContext.Lessons
+                .First(lesson => lesson.Id == readyHomework.Lesson.Id);
+            var homework = this._diaryDbContext.Homeworks
+                .First(homework => homework.Id == readyHomework.Homework.Id);
+            var student = this._diaryDbContext.Students
+                .First(student => student.Id == readyHomework.Student.Id);
+
+            readyHomework.Assessment = assessment;
+            readyHomework.Group = group;
+            readyHomework.Lesson = lesson;
+            readyHomework.Homework = homework;
+            readyHomework.Student = student;
+
             var update = new ReadyHomework()
             {
                 ShortDescription = readyHomework.ShortDescription,
@@ -63,13 +80,14 @@ namespace Diary.Areas.Teacher.Controllers
                 StartDateTime = readyHomework.StartDateTime,
                 StopDateTime = readyHomework.StopDateTime,
                 DeliveryDateTime = readyHomework.DeliveryDateTime,
-                Assessment = readyHomework.Assessment,
-                Group = readyHomework.Group,
-                Lesson = readyHomework.Lesson,
-                Homework = readyHomework.Homework,
-                Student = readyHomework.Student
+                Assessment = assessment,
+                Group = group,
+                Lesson = lesson,
+                Homework = homework,
+                Student = student
             };
 
+            this._diaryDbContext.ReadyHomeworks.Remove(readyHomework);
             this._diaryDbContext.ReadyHomeworks.Update(update);
             this._diaryDbContext.SaveChanges();
 
