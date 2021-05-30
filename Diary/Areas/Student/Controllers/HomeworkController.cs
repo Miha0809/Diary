@@ -5,6 +5,7 @@ using Diary.Models;
 using Diary.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diary.Areas.Student.Controllers
@@ -38,34 +39,33 @@ namespace Diary.Areas.Student.Controllers
                 return NotFound("id homework for details == null");
             }
 
+            var homework = this._diaryDbContext.Homeworks.First(homework => homework.Id == id);
+            ViewBag.Lesson = this._diaryDbContext.Lessons.First(lesson => lesson.Id == homework.Lesson.Id);
+
             return View(this._diaryDbContext.Homeworks.Find(id));
         }
 
         [HttpPost]
         public IActionResult Details(Homework homework)
         {
+            var student = this._diaryDbContext.Students.First(student => student.Email.Equals(User.Identity.Name));
+            var lesson = this._diaryDbContext.Lessons.First(lesson => lesson.Id == homework.Lesson.Id);
+            var point = this._diaryDbContext.Assessments.First(point => point.Mark == -1);
 
-            // TODO: null is sent to object null
-            // TODO: save lesson this homework
-
-            var student = this._diaryDbContext.Students.FirstOrDefault(s => s.Email.Equals(User.Identity.Name));
+            // TODO: TextToHomework
             var readyHomework = new ReadyHomework()
             {
+                Assessment = point,
                 ShortDescription = homework.ShortDescription,
                 LongDescription = homework.LongDescription,
                 StartDateTime = homework.StartDateTime,
                 StopDateTime = homework.StopDateTime,
                 DeliveryDateTime = DateTime.Now,
                 Group = student.Group,
-                Lesson = homework.Lesson,
+                Lesson = lesson,
                 Homework = homework,
                 Student = student
             };
-
-            if (homework == null || readyHomework == null)
-            {
-                return NotFound("homework == null || readyHomework == null");
-            }
 
             var uploadedFile = HttpContext.Request.Form.Files[0];
             var path = "/Files/" + uploadedFile.FileName;
